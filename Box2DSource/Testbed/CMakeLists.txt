@@ -14,11 +14,15 @@ set(Testbed_Framework_SRCS
 set(Testbed_Tests_SRCS
 	Tests/TestEntries.cpp
 	Tests/AngryBirds.h
-    Tests/Material.h
-    Tests/Object.h
-    Tests/Shape.h
-    Tests/Material.cpp
-    Tests/Object.cpp
+	Tests/Material.h
+	Tests/Material.cpp
+	Tests/Object.h
+	Tests/Object.cpp
+	Tests/Shape.h
+	Tests/Shape.cpp
+	Tests/Level.h
+	Tests/Level.cpp
+	ObjectStaticsClass.h
 )
 
 # These are used to create visual studio folders.
