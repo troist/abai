@@ -20,6 +20,7 @@ class Shape
 
 class Circle : public Shape
 {
+	static std::string type;
     double radius;
     double offsetX;
     double offsetY;

@@ -1,4 +1,5 @@
-#include "ObjectStaticsClass.h"
+#include "Level.h"
+#include "levels/Level1_1.cpp"
 #include <iostream>
 
 #ifndef ANGRYBIRDSTEST_H
@@ -49,14 +50,14 @@ public:
         
     AngryBirdsTest() 
     {
-        std::string testStr = "foo";
+        /*std::string testStr = "foo";
         //Shape testShape("SHAPE");
         //Material testMaterial('0',1,1,1,1,1);
         Object* testObject = new Bird(testStr,new Material('0',1,1,1,1,1), new Shape("SHAPE"),1337,testStr,1,1);
         
-        std::cout<<testObject->score<<std::endl;
+        std::cout<<testObject->score<<std::endl;*/
         
-        
+		Level level = Level1_1();        
         
         // Give initial starting velocity vector
 		xLaunch = 60.0f;
@@ -68,15 +69,38 @@ public:
 		b2Body* platform = m_world->CreateBody(&bd);
             
 		b2EdgeShape groundShape;
-		groundShape.Set(b2Vec2(-300.0f, 0.0f), b2Vec2(300.0f, 0.0f));
+		groundShape.Set(b2Vec2(-1000.0f, 0.0f), b2Vec2(1000.0f, 0.0f));
 		ground->CreateFixture(&groundShape, 0.0f);
 
+		for (vector<LevelObject*>::iterator l = level.objects.begin(); l != level.objects.end(); ++l)
+		{
+			Object* object = (*l)->object;
+			//Shape* shape = (*object)->;
+			b2BodyDef myBodyDef;
+            myBodyDef.type = b2_dynamicBody; 
+            myBodyDef.position.Set(blocks[i][2], blocks[i][3]);
+            myBodyDef.angle = 0;
+            //myBodyDef.linearDamping = 0.1f;
+            b2Body* dynamicBody = m_world->CreateBody(&myBodyDef);
+                
+            b2PolygonShape boxShape;
+            boxShape.SetAsBox(blocks[i][0],blocks[i][1]);
+
+            b2FixtureDef boxFixtureDef;
+            boxFixtureDef.shape = &boxShape;
+            boxFixtureDef.density = 2.0f;
+			boxFixtureDef.friction = 1.0f;
+			boxFixtureDef.restitution = 0.0f;
+            dynamicBody->CreateFixture(&boxFixtureDef);
+		}
 		/* Old Code for blocks
 		// Make Level 1-1 platform
 		b2EdgeShape platformShape;
 		platformShape.Set(b2Vec2(50.0f, 4.0f), b2Vec2(74.0f, 4.0f));
 		platform->CreateFixture(&platformShape, 0.0f);
-			
+		
+		}
+
 		// Make blocks
 		int blocksSize = sizeof( blocks ) / sizeof( int ) / 4;
 		for(int i = 0; i < blocksSize; i++)

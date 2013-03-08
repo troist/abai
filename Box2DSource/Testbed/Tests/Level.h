@@ -18,6 +18,8 @@ class Level
 	public:
 	std::vector< LevelObject* > objects;
 
+	void addObject( LevelObject* object );
+
 	Level() { }
 	Level( std::vector< LevelObject* > objects );
 
