@@ -1,15 +1,21 @@
 #include <iostream>
+#include <vector>
+#include <array>
+
+// This file requires C++0x
 
 class Shape
 {
     // Empty class
-    /*public:
+    public:
 	const std::string test;
     
+	Shape() { }
+
 	Shape(std::string test) : test(test)
     {
         std::cout<<"made shape"<<std::endl;
-    }*/
+    }
 };
 
 class Circle : public Shape
@@ -19,8 +25,8 @@ class Circle : public Shape
     double offsetY;
     
     Circle() { }
-    Circle( double radius, double offsetX, double offset Y );
-}
+    Circle( double radius, double offsetX, double offsetY );
+};
 
 class Rectangle : public Shape
 {
@@ -29,14 +35,14 @@ class Rectangle : public Shape
     
     Rectangle() { }
     Rectangle( double width, double height );
-}
+};
 
-// TODO: Remove hardcoding of array
-/*class Polygon : public Shape
+// TODO: Change to vector so it supports shapes other than triangles
+class Polygon : public Shape
 {
     int vertexCount;
-    double* vertices[];
+	std::vector< std::array< double, 2 > > vertices;
     
     Polygon() { }
-    Polygon( int vertexCount, double vertices[] );
-}*/
+    Polygon( int vertexCount, std::vector< std::array< double, 2 > > vertices);
+};

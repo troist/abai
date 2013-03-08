@@ -52,7 +52,7 @@ public:
         std::string testStr = "foo";
         //Shape testShape("SHAPE");
         //Material testMaterial('0',1,1,1,1,1);
-        Object* testObject = new Bird(testStr,new Material('0',1,1,1,1,1),new Shape("SHAPE"),1337,testStr,1,1);
+        Object* testObject = new Bird(testStr,new Material('0',1,1,1,1,1), new Shape("SHAPE"),1337,testStr,1,1);
         
         std::cout<<testObject->score<<std::endl;
         
