@@ -8,7 +8,7 @@ class Shape
 {
     // Empty class
     public:
-	const std::string test;
+	std::string test;
     
 	Shape() { }
 
@@ -37,7 +37,6 @@ class Rectangle : public Shape
     Rectangle( double width, double height );
 };
 
-// TODO: Change to vector so it supports shapes other than triangles
 class Polygon : public Shape
 {
     int vertexCount;
