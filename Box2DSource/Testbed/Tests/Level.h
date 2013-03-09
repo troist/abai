@@ -1,3 +1,6 @@
+#ifndef LEVEL_H
+#define LEVEL_H
+
 #include "ObjectStaticsClass.h"
 #include <vector>
 
@@ -24,3 +27,5 @@ class Level
 	Level( std::vector< LevelObject* > objects );
 
 };
+
+#endif
