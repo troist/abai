@@ -11,10 +11,10 @@
 
 #define BLOCKCOUNT 6
 
-#define XLAUNCHORIG -50.0f
-#define YLAUNCHORIG 18.0f
+#define SIZESCALE 38
 
-#define SIZESCALE 40
+#define XLAUNCHORIG 0.0f / SIZESCALE * 2
+#define YLAUNCHORIG 130.0f / SIZESCALE * 2
 
 #define KEYFACTOR 0.5f
 
@@ -78,7 +78,7 @@ public:
 		level.addObject( new LevelObject( 52.58, -5.822, 89.561, ObjectStaticsClass::createObject("ICE_BLOCK_4X1") ) );
 
         // Give initial starting velocity vector
-		xLaunch = 60.0f;
+		xLaunch = 40.0f;
 		yLaunch = 20.0f;
 		
         // Make the ground
@@ -96,25 +96,40 @@ public:
 			Object* object = levelObject->object;
 			Material* material = object->material;
 
-			if ( object->shape->shapeType() != 'r' ) {
-				continue;
-			}
-
+			b2PolygonShape polyShape;
+			b2FixtureDef bodyFixtureDef;
 			b2BodyDef myBodyDef;
-            myBodyDef.type = b2_dynamicBody; 
-			myBodyDef.position.Set(levelObject->x, (levelObject->y)*-1);
-			myBodyDef.angle = levelObject->angle*DEGTORAD;
-            //myBodyDef.linearDamping = 0.1f;
-            b2Body* dynamicBody = m_world->CreateBody(&myBodyDef);
-            
+			b2CircleShape circleShape;
 			
 
-			RectangleShape* shape = (RectangleShape*)(object->shape);
-			b2PolygonShape boxShape;
-			boxShape.SetAsBox( shape->width/SIZESCALE, shape->height/SIZESCALE );
+			char shapeType = object->shape->shapeType();
+			
+			// 0=dynamic, 1=static
+			if ( material->bodyType == '0' ) {
+				myBodyDef.type = b2_dynamicBody; 
+			} else {
+				myBodyDef.type = b2_staticBody; 
+			}
+            
+			myBodyDef.position.Set(levelObject->x, (levelObject->y)*-1);
 
-			b2FixtureDef bodyFixtureDef;
-			bodyFixtureDef.shape = &boxShape;
+			// Angle seems to cause problems with circles
+			if ( shapeType == 'r' || shapeType == 'p' ) {
+				myBodyDef.angle = levelObject->angle*DEGTORAD;
+			}
+            //myBodyDef.linearDamping = 0.1f;
+            b2Body* dynamicBody = m_world->CreateBody(&myBodyDef);
+
+			if ( shapeType == 'r' ) {
+				RectangleShape* shape = (RectangleShape*)(object->shape);
+				polyShape.SetAsBox( shape->width/SIZESCALE, shape->height/SIZESCALE );
+				bodyFixtureDef.shape = &polyShape;
+			} else if ( shapeType == 'c' ) {
+				CircleShape* shape = (CircleShape*)(object->shape);
+				circleShape.m_radius = shape->radius/SIZESCALE;
+				bodyFixtureDef.shape = &circleShape;
+			}
+
             
 			bodyFixtureDef.density = material->density;
 			bodyFixtureDef.friction = material->friction;
@@ -128,12 +143,13 @@ public:
 		
 		// Make the bird
 		b2CircleShape bulletShape;
-		bulletShape.m_radius = 1.5f;
+		bulletShape.m_radius = 0.5f;
 
 		b2FixtureDef bulletFd;
 		bulletFd.shape = &bulletShape;
-		bulletFd.density = 10.0f;
-		bulletFd.restitution = 0.1f;
+		bulletFd.density = 6.0f;
+		bulletFd.restitution = 0.43f;
+		bulletFd.friction = 0.3f;
 
 		b2BodyDef bulletBd;
 		bulletBd.type = b2_dynamicBody;
