@@ -4,6 +4,7 @@
 #include <iostream>
 #include <vector>
 #include <array>
+#include <Box2D/Box2D.h>
 
 // This file requires C++0x
 
@@ -11,6 +12,12 @@ class Shape
 {
     // Empty class
     public:
+	b2Shape* shape;
+
+	virtual void setb2Shape(b2Shape* inShape)
+	{
+
+	}
 
 	virtual char shapeType()
 	{
@@ -27,6 +34,11 @@ class CircleShape : public Shape
     double offsetX;
     double offsetY;
 
+	virtual void setb2Shape(b2Shape* inShape)
+	{
+
+	}
+
 	virtual char shapeType()
 	{
 		return 'c';
@@ -41,6 +53,11 @@ class RectangleShape : public Shape
 	public:
     double width;
     double height;
+
+	virtual void setb2Shape(b2Shape* inShape)
+	{
+
+	}
     
 	virtual char shapeType()
 	{
@@ -57,6 +74,10 @@ class PolygonShape : public Shape
     int vertexCount;
 	std::vector< std::array< double, 2 > > vertices;
     
+	virtual void setb2Shape(b2Shape* inShape)
+	{
+
+	}
 	virtual char shapeType()
 	{
 		return 'p';

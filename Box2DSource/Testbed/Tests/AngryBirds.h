@@ -1,7 +1,7 @@
 
 #include "Level.h"
 #include <iostream>
-#include <stdlib.h>
+#include <math.h>
 
 #ifndef ANGRYBIRDSTEST_H
 #define ANGRYBIRDSTEST_H
@@ -11,12 +11,12 @@
 
 #define BLOCKCOUNT 6
 
-#define SIZESCALE 38
+#define SIZESCALE 40
 
-#define XLAUNCHORIG 0.0f / SIZESCALE * 2
-#define YLAUNCHORIG 130.0f / SIZESCALE * 2
+#define XLAUNCHORIG 20.0f / SIZESCALE * 2
+#define YLAUNCHORIG 180.0f / SIZESCALE * 2
 
-#define KEYFACTOR 0.5f
+#define KEYFACTOR 0.05f
 
 class TrajectoryRayCastClosestCallback : public b2RayCastCallback
 {
@@ -48,6 +48,11 @@ public:
     b2Body* currentBird;
 	float xLaunch;
 	float yLaunch;
+	
+	float slingx;
+	float slingy;
+
+	b2Vec2 startingVelocity;
         
     AngryBirdsTest() 
     {
@@ -80,12 +85,22 @@ public:
         // Give initial starting velocity vector
 		xLaunch = 40.0f;
 		yLaunch = 20.0f;
+
+		// Gets most powerful velocity on line x=y
+		//slingx = (sqrt(5000) / SIZESCALE) * -1 * 2;
+		//slingy = (sqrt(5000) / SIZESCALE) * -1 * 2;
+
+		// Shoots good level 1 shot
+		slingx = -4.435535f;
+		slingy = -2.385535f;
+
+		startingVelocity = b2Vec2( slingx * -1 * 5 , slingy * -1 * 5 );
 		
         // Make the ground
 		b2BodyDef bd;
 		b2Body* ground = m_world->CreateBody(&bd);
 		b2Body* platform = m_world->CreateBody(&bd);
-            
+		            
 		b2EdgeShape groundShape;
 		groundShape.Set(b2Vec2(-1000.0f, 0.0f), b2Vec2(1000.0f, 0.0f));
 		ground->CreateFixture(&groundShape, 0.0f);
@@ -126,7 +141,7 @@ public:
 				bodyFixtureDef.shape = &polyShape;
 			} else if ( shapeType == 'c' ) {
 				CircleShape* shape = (CircleShape*)(object->shape);
-				circleShape.m_radius = shape->radius/SIZESCALE;
+				circleShape.m_radius = shape->radius/SIZESCALE*2;
 				bodyFixtureDef.shape = &circleShape;
 			}
 
@@ -143,7 +158,7 @@ public:
 		
 		// Make the bird
 		b2CircleShape bulletShape;
-		bulletShape.m_radius = 0.5f;
+		bulletShape.m_radius = 17.0f / SIZESCALE * 2;
 
 		b2FixtureDef bulletFd;
 		bulletFd.shape = &bulletShape;
@@ -183,8 +198,14 @@ public:
 		TrajectoryRayCastClosestCallback raycastCallback(currentBird);//this raycast will ignore the little box
 
 		b2Vec2 startingPosition = b2Vec2( XLAUNCHORIG, YLAUNCHORIG );
-		b2Vec2 startingVelocity = b2Vec2( xLaunch, yLaunch );
+		b2Vec2 slingVector = b2Vec2( slingx,  slingy );
+		startingVelocity = b2Vec2( slingx * -1 * 5 , slingy * -1 * 5 );
+
+		
 		b2Color whiteColor = b2Color( 255.0f, 255.0f, 255.0f );
+
+		m_debugDraw.DrawSegment( startingPosition+slingVector, startingPosition, whiteColor );
+		m_debugDraw.DrawSegment( startingPosition+startingVelocity, startingPosition, whiteColor );
 
 		b2Vec2 lastTP = startingPosition;
         for (int i = 0; i < 300; i++) {//5 seconds, should be long enough to hit something
@@ -203,30 +224,42 @@ public:
             lastTP = trajectoryPosition;
         }
 
-
-
-
     }
-        
+       
+	bool powerCheck( float x, float y )
+	{
+		std::cout << std::to_string(x) + ", " + std::to_string(y) << std::endl;
+		
+		return ( x < 0 && y < 0 ) && ( (x*x) + (y*y) < 25 );
+	}
+
     void Keyboard(unsigned char key)
 	{
 		switch (key)
 		{
 		case 'e':
 			currentBird->SetGravityScale(1);
-			currentBird->SetLinearVelocity(b2Vec2(xLaunch,yLaunch));
+			currentBird->SetLinearVelocity(startingVelocity);
 			break;
 		case 'w':
-			yLaunch += KEYFACTOR;
+			if ( powerCheck( slingx, slingy-KEYFACTOR ) ) {
+				slingy -= KEYFACTOR;
+			}
 			break;
 		case 's':
-			yLaunch -= KEYFACTOR;
+			if ( powerCheck( slingx, slingy+KEYFACTOR ) ) {
+				slingy += KEYFACTOR;
+			}
 			break;
 		case 'd':
-			xLaunch += KEYFACTOR;
+			if ( powerCheck( slingx-KEYFACTOR, slingy ) ) {
+				slingx -= KEYFACTOR;
+			}
 			break;
 		case 'a':
-			xLaunch -= KEYFACTOR;
+			if ( powerCheck( slingx+KEYFACTOR, slingy ) ) {
+				slingx += KEYFACTOR;
+			}
 			break;
 		}
 	}
