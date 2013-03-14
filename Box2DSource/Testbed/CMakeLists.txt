@@ -22,7 +22,7 @@ set(Testbed_Tests_SRCS
 	Tests/Shape.cpp
 	Tests/Level.h
 	Tests/Level.cpp
-	ObjectStaticsClass.h
+	Tests/ObjectStaticsClass.h
 )
 
 # These are used to create visual studio folders.
