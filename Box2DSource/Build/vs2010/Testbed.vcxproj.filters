@@ -15,142 +15,22 @@
     <ClInclude Include="..\..\Testbed\Framework\Test.h">
       <Filter>Framework</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Testbed\Tests\AddPair.h">
+    <ClInclude Include="..\..\Testbed\Tests\Shape.h">
       <Filter>Tests</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Testbed\Tests\ApplyForce.h">
+    <ClInclude Include="..\..\Testbed\Tests\AngryBirds.h">
       <Filter>Tests</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Testbed\Tests\BodyTypes.h">
+    <ClInclude Include="..\..\Testbed\Tests\Material.h">
       <Filter>Tests</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Testbed\Tests\Breakable.h">
+    <ClInclude Include="..\..\Testbed\Tests\Object.h">
       <Filter>Tests</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Testbed\Tests\Bridge.h">
+    <ClInclude Include="..\..\Testbed\Tests\ObjectStaticsClass.h">
       <Filter>Tests</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Testbed\Tests\BulletTest.h">
-      <Filter>Tests</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Testbed\Tests\Cantilever.h">
-      <Filter>Tests</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Testbed\Tests\Car.h">
-      <Filter>Tests</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Testbed\Tests\Chain.h">
-      <Filter>Tests</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Testbed\Tests\CharacterCollision.h">
-      <Filter>Tests</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Testbed\Tests\CollisionFiltering.h">
-      <Filter>Tests</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Testbed\Tests\CollisionProcessing.h">
-      <Filter>Tests</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Testbed\Tests\CompoundShapes.h">
-      <Filter>Tests</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Testbed\Tests\Confined.h">
-      <Filter>Tests</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Testbed\Tests\ContinuousTest.h">
-      <Filter>Tests</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Testbed\Tests\Cord.h">
-      <Filter>Tests</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Testbed\Tests\DistanceTest.h">
-      <Filter>Tests</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Testbed\Tests\Dominos.h">
-      <Filter>Tests</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Testbed\Tests\DumpShell.h">
-      <Filter>Tests</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Testbed\Tests\DynamicTreeTest.h">
-      <Filter>Tests</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Testbed\Tests\EdgeShapes.h">
-      <Filter>Tests</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Testbed\Tests\EdgeTest.h">
-      <Filter>Tests</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Testbed\Tests\Gears.h">
-      <Filter>Tests</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Testbed\Tests\OneSidedPlatform.h">
-      <Filter>Tests</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Testbed\Tests\Pinball.h">
-      <Filter>Tests</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Testbed\Tests\PolyCollision.h">
-      <Filter>Tests</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Testbed\Tests\PolyShapes.h">
-      <Filter>Tests</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Testbed\Tests\Prismatic.h">
-      <Filter>Tests</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Testbed\Tests\Pulleys.h">
-      <Filter>Tests</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Testbed\Tests\Pyramid.h">
-      <Filter>Tests</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Testbed\Tests\RayCast.h">
-      <Filter>Tests</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Testbed\Tests\Revolute.h">
-      <Filter>Tests</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Testbed\Tests\Rope.h">
-      <Filter>Tests</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Testbed\Tests\RopeJoint.h">
-      <Filter>Tests</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Testbed\Tests\SensorTest.h">
-      <Filter>Tests</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Testbed\Tests\ShapeEditing.h">
-      <Filter>Tests</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Testbed\Tests\SliderCrank.h">
-      <Filter>Tests</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Testbed\Tests\SphereStack.h">
-      <Filter>Tests</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Testbed\Tests\TheoJansen.h">
-      <Filter>Tests</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Testbed\Tests\Tiles.h">
-      <Filter>Tests</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Testbed\Tests\TimeOfImpact.h">
-      <Filter>Tests</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Testbed\Tests\VaryingFriction.h">
-      <Filter>Tests</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Testbed\Tests\VaryingRestitution.h">
-      <Filter>Tests</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Testbed\Tests\VerticalStack.h">
-      <Filter>Tests</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Testbed\Tests\Web.h">
-      <Filter>Tests</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Testbed\Tests\Tumbler.h">
+    <ClInclude Include="..\..\Testbed\Tests\Level.h">
       <Filter>Tests</Filter>
     </ClInclude>
   </ItemGroup>
@@ -165,6 +45,18 @@
       <Filter>Framework</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Testbed\Tests\TestEntries.cpp">
+      <Filter>Tests</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Testbed\Tests\Shape.cpp">
+      <Filter>Tests</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Testbed\Tests\Object.cpp">
+      <Filter>Tests</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Testbed\Tests\Material.cpp">
+      <Filter>Tests</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Testbed\Tests\Level.cpp">
       <Filter>Tests</Filter>
     </ClCompile>
   </ItemGroup>

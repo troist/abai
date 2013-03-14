@@ -2,7 +2,7 @@ import json
 
 s = ""
 
-levelFile = file("Level1-1.json","r")
+levelFile = file("Level1-4.json","r")
 levelJson = levelFile.read()
 levelParsed = json.loads(levelJson)
 
