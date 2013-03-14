@@ -1,0 +1,16 @@
+# CMake generation dependency list for this directory.
+C:/Users/troist/Documents/abai/git/abai/Box2DSource/Build/CMakeFiles/CMakeTmp/CMakeLists.txt
+C:/Users/troist/Documents/abai/git/abai/Box2DSource/Build/CMakeFiles/CMakeSystem.cmake
+C:/Users/troist/Documents/abai/git/abai/Box2DSource/Build/CMakeFiles/CMakeCCompiler.cmake
+c:/Program Files (x86)/CMake 2.8/share/cmake-2.8/Modules/CMakeSystemSpecificInformation.cmake
+c:/Program Files (x86)/CMake 2.8/share/cmake-2.8/Modules/CMakeGenericSystem.cmake
+c:/Program Files (x86)/CMake 2.8/share/cmake-2.8/Modules/Platform/Windows.cmake
+c:/Program Files (x86)/CMake 2.8/share/cmake-2.8/Modules/Platform/WindowsPaths.cmake
+c:/Program Files (x86)/CMake 2.8/share/cmake-2.8/Modules/CMakeCInformation.cmake
+c:/Program Files (x86)/CMake 2.8/share/cmake-2.8/Modules/Platform/Windows-cl.cmake
+C:/Users/troist/Documents/abai/git/abai/Box2DSource/Build/CMakeFiles/CMakeCPlatform.cmake
+C:/Users/troist/Documents/abai/git/abai/Box2DSource/Build/CMakeFiles/CMakeCXXPlatform.cmake
+c:/Program Files (x86)/CMake 2.8/share/cmake-2.8/Modules/Platform/cl.cmake
+C:/Users/troist/Documents/abai/git/abai/Box2DSource/Build/CMakeFiles/CMakeRCCompiler.cmake
+c:/Program Files (x86)/CMake 2.8/share/cmake-2.8/Modules/CMakeRCInformation.cmake
+c:/Program Files (x86)/CMake 2.8/share/cmake-2.8/Modules/CMakeCommonLanguageInclude.cmake

@@ -1,0 +1,2 @@
+C:/Users/troist/Documents/abai/git/abai/Box2DSource/Build/CMakeFiles/CMakeTmp/CMakeFiles/ALL_BUILD.dir
+C:/Users/troist/Documents/abai/git/abai/Box2DSource/Build/CMakeFiles/CMakeTmp/CMakeFiles/cmTryCompileExec.dir
