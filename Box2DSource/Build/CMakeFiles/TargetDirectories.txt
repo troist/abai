@@ -1,6 +1,0 @@
-/export/mailgrp4_c/sc09ejw/group/Box2DSource/Build/Box2D/CMakeFiles/Box2D.dir
-/export/mailgrp4_c/sc09ejw/group/Box2DSource/Build/Box2D/CMakeFiles/Box2D_shared.dir
-/export/mailgrp4_c/sc09ejw/group/Box2DSource/Build/HelloWorld/CMakeFiles/HelloWorld.dir
-/export/mailgrp4_c/sc09ejw/group/Box2DSource/Build/Testbed/CMakeFiles/Testbed.dir
-/export/mailgrp4_c/sc09ejw/group/Box2DSource/Build/freeglut/CMakeFiles/freeglut_static.dir
-/export/mailgrp4_c/sc09ejw/group/Box2DSource/Build/glui/CMakeFiles/glui.dir
