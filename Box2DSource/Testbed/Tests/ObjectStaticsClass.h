@@ -8,7 +8,7 @@
 #include "Object.h"
 #include "Shape.h"
 
-#define DEBUGGING true
+#define DEBUGGING false
 
 class ObjectStaticsClass
 {

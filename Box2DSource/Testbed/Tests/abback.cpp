@@ -1,10 +1,8 @@
 
+#include "Level.h"
 #include <iostream>
 #include <math.h>
 #include <stdlib.h>
-#include "Level.h"
-#include "AI.h"
-#include "LevelStaticsClass.h"
 
 #ifndef ANGRYBIRDSTEST_H
 #define ANGRYBIRDSTEST_H
@@ -49,39 +47,60 @@ class AngryBirdsTest : public Test
 public:
         
     b2Body* currentBird;
-
-	bool keySwitchOnLaunch;
+	float xLaunch;
+	float yLaunch;
 	
 	float slingx;
 	float slingy;
 
-	b2Vec2 hitTarget;
-
-	b2Vec2 birdVel;
+	b2Vec2 startingVelocity;
 
 	Level level;
-	std::string levelLabel;
-
-	AI ai;
-
-	double initialChange;
         
     AngryBirdsTest() 
     {
-		// Currently included levels are: 1, 4, 5, 7, 9, 12, 13, 16, 17, 20, 21
-		level = LevelStaticsClass::Level1_1();
+		        
+		//Level level = Level1_1::CreateLevel1_1();  
 
-		keySwitchOnLaunch = true;
+		
+		level.addObject( new LevelObject( 65.54, -9.081, 329.714, ObjectStaticsClass::createObject("WOOD_BLOCK_4X1") ) );
+		level.addObject( new LevelObject( 73.544, -13.655, 205.369, ObjectStaticsClass::createObject("ICE_BLOCK_8X1") ) );
+		level.addObject( new LevelObject( 76.954, -7.554, 90.679, ObjectStaticsClass::createObject("ICE_BLOCK_8X1") ) );
+		level.addObject( new LevelObject( 69.882, -9.632, 180.567, ObjectStaticsClass::createObject("WOOD_BLOCK_4X2") ) );
+		level.addObject( new LevelObject( 65.788, -13.603, 335.673, ObjectStaticsClass::createObject("ICE_BLOCK_8X1") ) );
+		level.addObject( new LevelObject( 64.193, -5.616, 269.944, ObjectStaticsClass::createObject("WOOD_BLOCK_4X1") ) );
+		level.addObject( new LevelObject( 69.79, -12.632, 90.477, ObjectStaticsClass::createObject("ICE_BLOCK_4X1") ) );
+		level.addObject( new LevelObject( 73.996, -9.004, 28.898, ObjectStaticsClass::createObject("WOOD_BLOCK_4X1") ) );
+		level.addObject( new LevelObject( 75.307, -5.577, 270.045, ObjectStaticsClass::createObject("WOOD_BLOCK_4X1") ) );
+		level.addObject( new LevelObject( 5.043, -0.972, 0, ObjectStaticsClass::createObject("BIRD_RED") ) );
+		level.addObject( new LevelObject( 2.549, -1.136, 0, ObjectStaticsClass::createObject("BIRD_RED") ) );
+		level.addObject( new LevelObject( 8.196, -0.925, 0, ObjectStaticsClass::createObject("BIRD_RED") ) );
+		level.addObject( new LevelObject( 0, -1.082, 0, ObjectStaticsClass::createObject("BIRD_RED") ) );
+		level.addObject( new LevelObject( 62.402, -7.576, 89.304, ObjectStaticsClass::createObject("ICE_BLOCK_8X1") ) );
+		level.addObject( new LevelObject( 70.096, -4.682, 359.986, ObjectStaticsClass::createObject("PIG_BASIC_SMALL") ) );
+		level.addObject( new LevelObject( 72.587, 1.363, 89.997, ObjectStaticsClass::createObject("TERRAIN_TEXTURED_HILLS_10X10") ) );
+		level.addObject( new LevelObject( 66.672, 1.293, 89.997, ObjectStaticsClass::createObject("TERRAIN_TEXTURED_HILLS_10X10") ) );
+		level.addObject( new LevelObject( 77.517, -0.045, 44.998, ObjectStaticsClass::createObject("TERRAIN_TEXTURED_HILLS_5X5") ) );
+		level.addObject( new LevelObject( 61.813, -0.045, 44.998, ObjectStaticsClass::createObject("TERRAIN_TEXTURED_HILLS_5X5") ) );
+		level.addObject( new LevelObject( 73.183, -5.544, 90.074, ObjectStaticsClass::createObject("STONE_BLOCK_4X1") ) );
+		level.addObject( new LevelObject( 69.763, -8.092, 0.583, ObjectStaticsClass::createObject("STONE_BLOCK_8X1") ) );
+		level.addObject( new LevelObject( 66.116, -5.615, 90.146, ObjectStaticsClass::createObject("STONE_BLOCK_4X1") ) );
+
+
+        // Give initial starting velocity vector
+		xLaunch = 40.0f;
+		yLaunch = 20.0f;
+
+		// Gets most powerful velocity on line x=y
+		//slingx = (sqrt(5000) / SIZESCALE) * -1 * 2;
+		//slingy = (sqrt(5000) / SIZESCALE) * -1 * 2;
 
 		// Shoots good level 1 shot
 		slingx = -4.435535f;
 		slingy = -2.385535f;
 
-		birdVel = b2Vec2( slingx * -1 * 5 , slingy * -1 * 5 );
-
-		ai = AI(&level);
-		hitTarget = ai.chooseTarget();
-
+		startingVelocity = b2Vec2( slingx * -1 * 5 , slingy * -1 * 5 );
+		
         // Make the ground
 		b2BodyDef bd;
 		b2Body* ground = m_world->CreateBody(&bd);
@@ -116,7 +135,7 @@ public:
 
 			// Angle seems to cause problems with circles
 			if ( shapeType == 'r' || shapeType == 'p' ) {
-				//std::cout<<levelObject->angle<<std::endl;
+				std::cout<<levelObject->angle<<std::endl;
 				myBodyDef.angle = (180-(levelObject->angle))*DEGTORAD;
 			}
             //myBodyDef.linearDamping = 0.1f;
@@ -146,9 +165,9 @@ public:
 			levelObject->starty = dynamicBody->GetPosition().y;
 
 
-		}
-
-		// Make the birds
+		}		
+		
+		// Make the bird
 		b2CircleShape bulletShape;
 		bulletShape.m_radius = 17.0f / SIZESCALE * 2;
 
@@ -161,20 +180,11 @@ public:
 		b2BodyDef bulletBd;
 		bulletBd.type = b2_dynamicBody;
 		bulletBd.bullet = true;
+		bulletBd.position.Set(XLAUNCHORIG, YLAUNCHORIG);
 
-		for( int i = 0; i < level.birdCount; i++)
-		{
-			bulletBd.position.Set(XLAUNCHORIG-(3*(i+1)), YLAUNCHORIG);
-			
-			b2Body* tempBird = m_world->CreateBody(&bulletBd);
-			tempBird->SetGravityScale(0);
-			tempBird->CreateFixture(&bulletFd);
-
-			level.birds.push_back(tempBird);
-			
-		}
-
-		//currentBird = level.getBird();
+		currentBird = m_world->CreateBody(&bulletBd);
+		currentBird->SetGravityScale(0);
+		currentBird->CreateFixture(&bulletFd);
             
     }
 
@@ -188,11 +198,12 @@ public:
 		return sqrt(c2);
 	}
 
-	b2Vec2 getTrajectoryPoint( b2Vec2& startingPosition, b2Vec2& _birdVel, float n )
+	b2Vec2 getTrajectoryPoint( b2Vec2& startingPosition, b2Vec2& startingVelocity, float n )
 	{
-		float t = 1 / 60.0f;
-		b2Vec2 stepVelocity = t * _birdVel;
-		b2Vec2 stepGravity = t * t * m_world->GetGravity();
+		// velocity and gravity are given per second but we want time step values here
+		float t = 1 / 60.0f; // seconds per time step (at 60fps)
+		b2Vec2 stepVelocity = t * startingVelocity; // m/s
+		b2Vec2 stepGravity = t * t * m_world->GetGravity(); // m/s/s
   
 		return startingPosition + n * stepVelocity + 0.5f * (n*n+n) * stepGravity;
 	}
@@ -204,7 +215,7 @@ public:
 		double sum = 0;
 		int i = 0;
 
-		/*for (std::vector<LevelObject*>::iterator l = level.objects.begin(); l != level.objects.end(); ++l)
+		for (std::vector<LevelObject*>::iterator l = level.objects.begin(); l != level.objects.end(); ++l)
 		{
 			b2Body* bodyObj = (*l)->bodyObject;
 			b2Vec2 pos = bodyObj->GetPosition();
@@ -212,30 +223,29 @@ public:
 			//std::cout << (*l)->object->type << ": " << bodyMoved(*l) << std::endl;
 			sum+=bodyMoved(*l);
 			i++;
-		}*/
-		//std::cout << "Moved: " << sum / i << std::endl;
+		}
+		std::cout << "Moved: " << sum / i << std::endl;
 		
             
-        //m_debugDraw.DrawString( 5, m_textLine, "Level 1-13");
-		if ( keySwitchOnLaunch) m_debugDraw.DrawString( 5, m_textLine, "[w] [a] [s] [d] to move the trajectory");
-		else m_debugDraw.DrawString( 5, m_textLine, "[w] [a] [s] [d] to move the target");
-		m_debugDraw.DrawString( 5, m_textLine + 15, "[e] to shoot, [t] to hit target, [q] to switch control, [r] to restart");
+        m_debugDraw.DrawString( 5, m_textLine, "Level 1-1 Barebones");
+		m_debugDraw.DrawString( 5, m_textLine + 15, "[w] [a] [s] [d] to move the trajectory");
+		m_debugDraw.DrawString( 5, m_textLine + 30, "[e] to shoot, [r] to restart");
 
 		TrajectoryRayCastClosestCallback raycastCallback(currentBird);//this raycast will ignore the little box
 
 		b2Vec2 startingPosition = b2Vec2( XLAUNCHORIG, YLAUNCHORIG );
 		b2Vec2 slingVector = b2Vec2( slingx,  slingy );
-		birdVel = b2Vec2( slingx * -1 * 5 , slingy * -1 * 5 );
+		startingVelocity = b2Vec2( slingx * -1 * 5 , slingy * -1 * 5 );
 
 		
 		b2Color whiteColor = b2Color( 255.0f, 255.0f, 255.0f );
 
 		m_debugDraw.DrawSegment( startingPosition+slingVector, startingPosition, whiteColor );
-		m_debugDraw.DrawSegment( startingPosition+birdVel, startingPosition, whiteColor );
+		m_debugDraw.DrawSegment( startingPosition+startingVelocity, startingPosition, whiteColor );
 
 		b2Vec2 lastTP = startingPosition;
         for (int i = 0; i < 300; i++) {//5 seconds, should be long enough to hit something
-            b2Vec2 trajectoryPosition = getTrajectoryPoint( startingPosition, birdVel, i );
+            b2Vec2 trajectoryPosition = getTrajectoryPoint( startingPosition, startingVelocity, i );
 
             if ( i > 0 ) {
                 m_world->RayCast(&raycastCallback, lastTP, trajectoryPosition);
@@ -250,131 +260,47 @@ public:
             lastTP = trajectoryPosition;
         }
 
-		// Draw an x over the target
-		double xSize = 0.5;
-		m_debugDraw.DrawSegment ( b2Vec2( hitTarget.x + xSize, hitTarget.y + xSize ), b2Vec2( hitTarget.x - xSize, hitTarget.y - xSize ), whiteColor );
-		m_debugDraw.DrawSegment ( b2Vec2( hitTarget.x + xSize, hitTarget.y - xSize ), b2Vec2( hitTarget.x - xSize, hitTarget.y + xSize ), whiteColor );
-		
     }
-
-	void shoot()
+       
+	bool powerCheck( float x, float y )
 	{
-		if(level.atBird < level.birdCount) {
-			b2Body* curBird = level.getBird();
-			currentBird = curBird;
-			curBird->SetGravityScale(1);
-			curBird->SetLinearVelocity(birdVel);
-			curBird->SetTransform(b2Vec2(XLAUNCHORIG,YLAUNCHORIG),0);
-		}
-	}
-
-	void shoot(b2Vec2 _birdVel)
-	{
-		birdVel = _birdVel;
-		slingx = _birdVel.x * -1 * 0.2;
-		slingy = _birdVel.y * -1 * 0.2;
-		shoot();
-	}
-
-	bool hit()
-	{
-		int i = 60;
-		b2Vec2 calcVec;
-		do
-		{
-			float t = i / 60.0f;
-			if( i > 600 ) return false; // Bird cannot need to travel over 10 seconds to hit the target
-			double vx = (hitTarget.x - XLAUNCHORIG) / t;
-			double vy = ((hitTarget.y + ( 0.5 * ( m_world->GetGravity().y * -1 ) * t * t )) - YLAUNCHORIG ) / t;
-			//if( i % 100 == 1 ) std::cout << vx << " - " << vy << std::endl;// For debugging
-			calcVec = b2Vec2( vx, vy );
-			i++;
-		} while( !powerAllowed(calcVec) );
-
-		shoot(calcVec);
 		return true;
+		std::cout << std::to_string(x) + ", " + std::to_string(y) << std::endl;
+		
+		return ( x < 0 && y < 0 ) && ( (x*x) + (y*y) < 25 );
 	}
-
-	bool hit(double _x, double _y)
-	{
-		hitTarget = b2Vec2(_x,_y);
-		return hit();
-	}
-
-	void updateHit( double _x, double _y )
-	{
-		hitTarget = b2Vec2( hitTarget.x + _x, hitTarget.y + _y );
-	}
-
-	void updateLaunch( double _x, double _y )
-	{
-		slingx += _x;
-		slingy += _y;
-	}
-
-	bool powerAllowed(b2Vec2 vec)
-	{
-		int powerMax = 30;
-		double vecLength = sqrt((vec.x * vec.x) + (vec.y * vec.y));
-		return (vecLength <= powerMax);
-	}
-
 
     void Keyboard(unsigned char key)
 	{
 		switch (key)
 		{
 		case 'e':
-			shoot();
+			currentBird->SetGravityScale(1);
+			currentBird->SetLinearVelocity(startingVelocity);
 			break;
-
-		case 't':
-			hit();
-			break;
-
 		case 'w':
-			if ( keySwitchOnLaunch ) updateLaunch( 0, KEYFACTOR * -1 );
-			else updateHit( 0, KEYFACTOR * 5 );
-			break;
-
-		case 's':
-			if ( keySwitchOnLaunch ) updateLaunch( 0, KEYFACTOR );
-			else updateHit( 0, KEYFACTOR * -5 );
-			break;
-
-		case 'd':
-			if ( keySwitchOnLaunch ) updateLaunch( KEYFACTOR * -1, 0 );
-			else updateHit( KEYFACTOR * 5, 0 );
-			break;
-
-		case 'a':
-			if ( keySwitchOnLaunch ) updateLaunch( KEYFACTOR, 0 );
-			else updateHit( KEYFACTOR * -5, 0 );
-			break;
-
-		case 'q':
-			keySwitchOnLaunch = !keySwitchOnLaunch;
-			break;
-
-		case 'f':
-			int i = 0;
-			double sum = 0;
-			for (std::vector<LevelObject*>::iterator l = level.objects.begin(); l != level.objects.end(); ++l)
-			{
-
-				b2Body* bodyObj = (*l)->bodyObject;
-				b2Vec2 pos = bodyObj->GetPosition();
-				//printf("%s %f %f\n", levelObject->object->type, pos.x, pos.y);
-				//std::cout << (*l)->object->type << ": " << bodyMoved(*l) << std::endl;
-				sum+=bodyMoved(*l);
-				i++;
+			if ( powerCheck( slingx, slingy-KEYFACTOR ) ) {
+				slingy -= KEYFACTOR;
 			}
-			std::cout << "Sum: " << sum << "\tAvg:" << sum / i << std::endl;
 			break;
-
+		case 's':
+			if ( powerCheck( slingx, slingy+KEYFACTOR ) ) {
+				slingy += KEYFACTOR;
+			}
+			break;
+		case 'd':
+			if ( powerCheck( slingx-KEYFACTOR, slingy ) ) {
+				slingx -= KEYFACTOR;
+			}
+			break;
+		case 'a':
+			if ( powerCheck( slingx+KEYFACTOR, slingy ) ) {
+				slingx += KEYFACTOR;
+			}
+			break;
 		}
 	}
-    
+        
     static Test* Create()
     {
         return new AngryBirdsTest;
